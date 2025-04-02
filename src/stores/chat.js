@@ -1,10 +1,17 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-const useChatStore = create((set) => ({
-    conversations: [],
-    selectedIndex: -1,
-    setConversations: (newConversations) => set({ conversations: newConversations }),
-    setSelectedIndex: (index) => set({ selectedIndex: index }),
+export const useChatStore = create((set, get) => ({
+  conversations: [],
+  selectedIndex: -1,
+  getCurrentConversation: () => {
+    const state = get();
+    return state.conversations[state.selectedIndex] || null;
+  },
+  addConversation: (conversation) => {
+    set((state) => ({
+      conversations: [...state.conversations, conversation],
+    }));
+  },
 }));
 
 export default useChatStore;
